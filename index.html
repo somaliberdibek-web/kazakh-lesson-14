@@ -40,6 +40,10 @@
         .btn-outline:hover { background: var(--primary); color: var(--white); }
         .btn-row { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 
+        /* Quiz Box for Words */
+        .quiz-card { background:#f9fbfc; padding:20px; border-radius:12px; border:2px solid var(--primary); text-align:center; margin-bottom:20px; }
+        .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px; }
+
         /* Flashcards */
         .flashcard-container { perspective: 1000px; width: 100%; max-width: 400px; height: 300px; margin: 0 auto 20px; cursor: pointer; }
         .flashcard { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; border-radius: var(--radius); box-shadow: var(--shadow); }
@@ -78,7 +82,7 @@
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background: var(--primary); color: var(--white); }
 
-        /* Print Layout (Only applies via JS injection for clean printing) */
+        /* Print Layout */
         @media print {
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
@@ -101,22 +105,40 @@
     </header>
 
     <main id="main-content">
-        <!-- Введение -->
+        <!-- Кіріспе -->
         <div id="stage-0" class="stage active">
-            <h2>Добро пожаловать!</h2>
-            <p class="instruction">В этом уроке мы освоим два важных падежа казахского языка на основе 14-го урока: исходный (откуда? из чего?) и творительный (с кем? с чем? на чем?). Вас ждут интерактивные карточки, упражнения, диалог и мини-экзамен.</p>
-            <button onclick="nextStage(1)">Начать урок</button>
+            <h2>Қош келдіңіздер!</h2>
+            <p class="instruction">Бұл сабақта 14-сабақ бойынша Шығыс және Көмектес септіктерін меңгереміз. Сабақты бастамас бұрын ең алдымен <b>жаңа сөздер мен етістіктерді</b> жаттап алайық!</p>
+            <button onclick="nextStage(1)">Сабақты бастау</button>
         </div>
 
-        <!-- Этап 1: Флеш-карточки -->
+        <!-- 1-КЕЗЕҢ: ЖАҢА СӨЗДЕР МЕН ЕТІСТІКТЕР (ЕҢ БІРІНШІ) -->
         <div id="stage-1" class="stage">
-            <h2>Этап 1: Лексика (Флеш-карточки)</h2>
-            <p class="instruction">Изучите 24 слова и выражения. Нажмите на фотографию, чтобы перевернуть карточку. Убедитесь, что запомнили примеры.</p>
+            <h2>1-кезең: Жаңа сөздер мен етістіктер тренажеры</h2>
+            <p class="instruction">Қазақша сөздің дұрыс аудармасын таңдаңыз:</p>
+            
+            <div class="quiz-card">
+                <h2 id="quiz-word" style="color:var(--secondary); margin-bottom:15px; font-size:1.8rem;">қорқу</h2>
+                <div id="quiz-options" class="quiz-options"></div>
+                <div id="quiz-feedback" style="margin-top:15px; font-weight:bold; min-height:24px;"></div>
+            </div>
+
+            <p style="text-align:center; margin-bottom:15px;">Үлгерім: <span id="word-progress-count">0</span> / 6 сөз</p>
+
+            <div class="btn-row">
+                <button id="btn-to-stage-2" onclick="nextStage(2)" disabled>Флеш-карточкаларға өту ➔</button>
+            </div>
+        </div>
+
+        <!-- 2-КЕЗЕҢ: Флеш-карточкалар -->
+        <div id="stage-2" class="stage">
+            <h2>2-кезең: Лексикалық флеш-карточкалар</h2>
+            <p class="instruction">Суретті басып, карточканы аударыңыз. Мысалдарды мұқият оқыңыз.</p>
             
             <div class="flashcard-container" onclick="flipCard()">
                 <div class="flashcard" id="flashcard-element">
                     <div class="front">
-                        <div id="card-loader" class="image-loader">Загрузка фото...</div>
+                        <div id="card-loader" class="image-loader">Сурет жүктелуде...</div>
                         <img id="card-img" src="" alt="Лексика">
                     </div>
                     <div class="back">
@@ -131,115 +153,115 @@
             <p style="text-align: center; margin-bottom: 15px;">Карточка <span id="card-current">1</span> из <span id="card-total">24</span></p>
             
             <div class="btn-row">
-                <button class="btn-outline" onclick="changeCard(-1)">Назад</button>
-                <button onclick="changeCard(1)">Далее</button>
+                <button class="btn-outline" onclick="changeCard(-1)">Артқа</button>
+                <button onclick="changeCard(1)">Алға</button>
             </div>
             <div class="btn-row">
                 <button class="btn-outline" onclick="preparePrint()">🖨 Печать карточек (PDF)</button>
-                <button id="btn-to-stage-2" onclick="nextStage(2)" style="display: none;">Перейти к правописанию</button>
+                <button id="btn-to-stage-3" onclick="nextStage(3)">Правописаниеға өту ➔</button>
             </div>
         </div>
 
-        <!-- Этап 2: Правописание -->
-        <div id="stage-2" class="stage">
-            <h2>Этап 2: Правописание</h2>
-            <p class="instruction">Вставьте правильные окончания исходного (-дан/-ден, -тан/-тен, -нан/-нен) или творительного (-мен, -бен, -пен) падежей. Нажмите "Проверить" возле каждого ответа.</p>
+        <!-- 3-КЕЗЕҢ: Правописание -->
+        <div id="stage-3" class="stage">
+            <h2>3-кезең: Правописание (Септік жалғаулары)</h2>
+            <p class="instruction">Шығыс (-дан/-ден, -тан/-тен, -нан/-нен) немесе Көмектес (-мен, -бен, -пен) септігінің тиісті жалғауын жазыңыз.</p>
             <div id="exercises-1"></div>
             <div class="btn-row">
-                <button id="btn-to-stage-3" onclick="nextStage(3)" disabled>Перейти к теории</button>
+                <button id="btn-to-stage-4" onclick="nextStage(4)" disabled>Теорияға өту ➔</button>
             </div>
         </div>
 
-        <!-- Этап 3: Теория -->
-        <div id="stage-3" class="stage">
-            <h2>Этап 3: Грамматическая теория</h2>
+        <!-- 4-КЕЗЕҢ: Теория -->
+        <div id="stage-4" class="stage">
+            <h2>4-кезең: Грамматикалық теория</h2>
             <div style="max-height: 400px; overflow-y: auto; padding-right: 10px; margin-bottom: 20px;">
                 <h3>Шығыс септігі (Исходный падеж)</h3>
-                <p><strong>Вопросы:</strong> Кімнен? (От кого?), Неден? (От чего?), Қайдан? Қай жерден? (Откуда?)</p>
+                <p><strong>Сұрақтары:</strong> Кімнен? Неден? Қайдан? Қай жерден?</p>
                 <table>
-                    <tr><th>Окончания</th><th>Условие выбора</th><th>Примеры</th></tr>
-                    <tr><td>-дан / -ден</td><td>После гласных, сонорных (л, р, у, й) и звонких (ж, з)</td><td>Алматыдан, әуежайдан, пойыздан, сәбізден</td></tr>
-                    <tr><td>-тан / -тен</td><td>После глухих (к, қ, п, с, т, ш, щ, ф, х, һ, ц, ч) и звонких (б, в, г, д)</td><td>жұмыстан, автобустан, еттен, көкөністен</td></tr>
-                    <tr><td>-нан / -нен</td><td>После сонорных (м, н, ң) и притяжательных форм 3-го лица</td><td>мыңнан, Арманнан, бастығынан</td></tr>
+                    <tr><th>Жалғаулар</th><th>Қолданылу шарты</th><th>Мысалдар</th></tr>
+                    <tr><td>-дан / -ден</td><td>Дауыстылар, сонор "л, р, у, й" және ұяң "ж, з" кейін</td><td>Алматыдан, әуежайдан, пойыздан, сәбізден</td></tr>
+                    <tr><td>-тан / -тен</td><td>Қатаң дыбыстар мен "б, в, г, д" кейін</td><td>жұмыстан, автобустан, еттен, көкөністен</td></tr>
+                    <tr><td>-нан / -нен</td><td>Сонор "м, н, ң" және 3-жақ тәуелдік жалғаудан кейін</td><td>мыңнан, Арманнан, бастығынан</td></tr>
                 </table>
 
                 <h3 style="margin-top:20px;">Көмектес септігі (Творительный падеж)</h3>
-                <p><strong>Вопросы:</strong> Кіммен? / Кем? (С кем?), Немен? (С чем?, На чем?)</p>
+                <p><strong>Сұрақтары:</strong> Кіммен? Кем? Немен?</p>
                 <table>
-                    <tr><th>Окончания</th><th>Условие выбора</th><th>Примеры</th></tr>
-                    <tr><td>-мен</td><td>После гласных, всех сонорных и притяж. окончаний</td><td>сабынмен, анаммен, досыммен</td></tr>
-                    <tr><td>-бен</td><td>После звонких (ж, з)</td><td>қағазбен, мұзбен, аспазбен</td></tr>
-                    <tr><td>-пен</td><td>После глухих и звонких (б, в, г, д)</td><td>пышақпен, қасықпен, жұмыспен</td></tr>
+                    <tr><th>Жалғаулар</th><th>Қолданылу шарты</th><th>Мысалдар</th></tr>
+                    <tr><td>-мен</td><td>Дауыстылар, барлық сонорлар және тәуелдік жалғаудан кейін</td><td>сабынмен, анаммен, досыммен</td></tr>
+                    <tr><td>-бен</td><td>Ұяң "ж, з" кейін</td><td>қағазбен, мұзбен, аспазбен</td></tr>
+                    <tr><td>-пен</td><td>Қатаң дыбыстар мен "б, в, г, д" кейін</td><td>пышақпен, қасықпен, жұмыспен</td></tr>
                 </table>
             </div>
-            <button onclick="nextStage(4)">Понятно, к тренировке</button>
+            <button onclick="nextStage(5)">Грамматикалық жаттығуға өту ➔</button>
         </div>
 
-        <!-- Этап 4: Грамматическая тренировка -->
-        <div id="stage-4" class="stage">
-            <h2>Этап 4: Грамматическая тренировка</h2>
-            <p class="instruction">Добавьте окончания, чтобы составить правильные словосочетания.</p>
+        <!-- 5-КЕЗЕҢ: Грамматикалық тренажер -->
+        <div id="stage-5" class="stage">
+            <h2>5-кезең: Грамматикалық жаттығу</h2>
+            <p class="instruction">Дұрыс сөз тіркесін құрастыру үшін қажетті септік жалғауын жазыңыз.</p>
             <div id="exercises-3"></div>
             <div class="btn-row">
-                <button id="btn-to-stage-5" onclick="nextStage(5)" disabled>Перейти к диалогу</button>
+                <button id="btn-to-stage-6" onclick="nextStage(6)" disabled>Диалогқа өту ➔</button>
             </div>
         </div>
 
-        <!-- Этап 5: Диалог -->
-        <div id="stage-5" class="stage">
-            <h2>Этап 5: Диалог «Жұма кеші»</h2>
-            <p class="instruction">Прочитайте диалог, заполните пропуски (впишите окончания). Для тренировки вы можете скрыть реплики одного из героев.</p>
+        <!-- 6-КЕЗЕҢ: Диалог -->
+        <div id="stage-6" class="stage">
+            <h2>6-кезең: Диалог «Жұма кеші»</h2>
+            <p class="instruction">Диалогты оқып, бос орындарға тиісті жалғауларды жазыңыз.</p>
             <div class="btn-row" style="margin-bottom: 20px; justify-content: flex-start;">
-                <button class="btn-outline" onclick="toggleRole('Ayan')">Скрыть реплики Аяна</button>
-                <button class="btn-outline" onclick="toggleRole('Ernur')">Скрыть реплики Ернұра</button>
-                <button class="btn-outline" onclick="toggleRole('None')">Показать всё</button>
+                <button class="btn-outline" onclick="toggleRole('Ayan')">Аянның сөздерін жасыру</button>
+                <button class="btn-outline" onclick="toggleRole('Ernur')">Ернұрдың сөздерін жасыру</button>
+                <button class="btn-outline" onclick="toggleRole('None')">Бәрін көрсету</button>
             </div>
             
             <div id="dialog-container"></div>
             
             <div class="btn-row">
-                <button onclick="checkDialog()">Проверить диалог</button>
-                <button id="btn-to-stage-6" onclick="nextStage(6)" style="display:none;">Перейти к устному рассказу</button>
+                <button onclick="checkDialog()">Тексеру</button>
+                <button id="btn-to-stage-7" onclick="nextStage(7)" style="display:none;">Ауызша тапсырмаға өту ➔</button>
             </div>
         </div>
 
-        <!-- Этап 6: Устный рассказ -->
-        <div id="stage-6" class="stage">
-            <h2>Этап 6: Устный рассказ</h2>
-            <p class="instruction">Подготовьте устный рассказ (1-2 минуты) на тему «Мой обычный день». Используйте минимум 5 слов в исходном и творительном падежах.</p>
+        <!-- 7-КЕЗЕҢ: Ауызша тапсырма -->
+        <div id="stage-7" class="stage">
+            <h2>7-кезең: Ауызша әңгіме құрау</h2>
+            <p class="instruction">Өз күніңіз туралы 1-2 минуттық шағын әңгіме дайындаңыз. Төмендегі сұрақтарды қолданыңыз:</p>
             <ul style="margin-left: 20px; margin-bottom: 20px; color: #555;">
-                <li>Қайдан келесіз? (Откуда вы приходите?)</li>
-                <li>Жұмысқа/сабаққа немен барасыз? (На чем едете на работу/учебу?)</li>
-                <li>Түскі асты кіммен жейсіз? (С кем обедаете?)</li>
-                <li>Тамақ неден жасалған? (Из чего сделана еда?)</li>
+                <li>Қайдан келесіз? (жұмыстан, сабақтан...)</li>
+                <li>Жұмысқа немен барасыз? (автобуспен, метромен...)</li>
+                <li>Түскі асты кіммен жейсіз? (досыммен, әріптесіммен...)</li>
+                <li>Тамақ неден жасалған? (еттен, тауықтан...)</li>
             </ul>
             <div style="background: #e8f8f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                 <strong>Чек-лист:</strong><br>
-                <input type="checkbox" id="check1"> Я использовал транспорт (көлікпен, метромен...)<br>
-                <input type="checkbox" id="check2"> Я назвал место отправления (үйден, жұмыстан...)<br>
-                <input type="checkbox" id="check3"> Я говорил плавно и уверенно
+                <input type="checkbox" id="check1"> Көлік түрін айттым (-мен/-бен/-пен)<br>
+                <input type="checkbox" id="check2"> Бастапқы орынды айттым (-дан/-ден...)<br>
+                <input type="checkbox" id="check3"> Сенімді сөйледім
             </div>
-            <button onclick="nextStage(7)">Перейти к мини-экзамену</button>
+            <button onclick="nextStage(8)">Мини-экзаменге өту ➔</button>
         </div>
 
-        <!-- Этап 7: Экзамен -->
-        <div id="stage-7" class="stage">
-            <h2>Этап 7: Мини-экзамен</h2>
-            <p class="instruction">Переведите предложения на казахский язык. Соблюдайте порядок слов и правильные окончания. (Слова-подсказки: <i>бару, келу, ішу, жасалу</i>).</p>
+        <!-- 8-КЕЗЕҢ: Экзамен -->
+        <div id="stage-8" class="stage">
+            <h2>8-кезең: Мини-экзамен</h2>
+            <p class="instruction">Сөйлемдерді қазақ тіліне аударыңыз:</p>
             <div id="exam-container"></div>
             <div id="exam-result" class="feedback" style="margin-top: 15px;"></div>
             <div class="btn-row">
-                <button onclick="checkExam()">Сдать экзамен</button>
-                <button id="btn-retake" onclick="resetExam()" style="display:none;" class="btn-outline">Пересдать</button>
-                <button id="btn-finish" onclick="nextStage(8)" style="display:none;">Завершить урок</button>
+                <button onclick="checkExam()">Экзаменді тапсыру</button>
+                <button id="btn-retake" onclick="resetExam()" style="display:none;" class="btn-outline">Қайта тапсыру</button>
+                <button id="btn-finish" onclick="nextStage(9)" style="display:none;">Сабақты аяқтау 🎉</button>
             </div>
         </div>
 
-        <!-- Этап 8: Завершение -->
-        <div id="stage-8" class="stage" style="text-align: center;">
+        <!-- 9-КЕЗЕҢ: Завершение -->
+        <div id="stage-9" class="stage" style="text-align: center;">
             <h2>🎉 Құттықтаймыз! Поздравляем!</h2>
-            <p class="instruction">Вы успешно завершили Урок 14 и освоили исходный и творительный падежи.</p>
-            <button onclick="restartCourse()" style="margin-top: 20px;">Пройти урок снова</button>
+            <p class="instruction">Сіз 14-сабақты толық аяқтап, Шығыс және Көмектес септіктерін меңгердіңіз!</p>
+            <button onclick="restartCourse()" style="margin-top: 20px;">Сабақты басынан өту</button>
         </div>
     </main>
 </div>
@@ -247,378 +269,8 @@
 <div id="print-area"></div>
 
 <script>
-    /* --- ДАННЫЕ УРОКА (СТРОГО ИЗ PDF) --- */
-    const cardsData = [
-        { ru: 'На велосипеде', kz: 'Велосипедпен', ex: 'Мен жұмысқа велосипедпен барамын.', tr: 'Я еду на работу на велосипеде.', img: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'На автобусе', kz: 'Автобуспен', ex: 'Мен жұмысқа автобуспен барамын.', tr: 'Я еду на работу на автобусе.', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С работы', kz: 'Жұмыстан', ex: 'Мен жұмыстан кеш келдім.', tr: 'Я пришел с работы поздно.', img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'На поезде', kz: 'Пойызбен', ex: 'Ол Алматыға пойызбен келді.', tr: 'Он приехал в Алматы на поезде.', img: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Ручкой', kz: 'Қаламмен', ex: 'Хатты қаламмен жазды.', tr: 'Письмо написал ручкой.', img: 'https://images.unsplash.com/photo-1583485088034-697b5a62483c?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'От мамы', kz: 'Анамнан', ex: 'Бұл сыйлық анамнан.', tr: 'Этот подарок от мамы.', img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'На такси', kz: 'Таксимен', ex: 'Мен таксимен келе жатырмын.', tr: 'Я еду на такси.', img: 'https://images.unsplash.com/photo-1502870659501-85956e14edba?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'На самолете', kz: 'Ұшақпен', ex: 'Біз ұшақпен Астанаға ұштық.', tr: 'Мы полетели в Астану на самолете.', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Ложкой', kz: 'Қасықпен', ex: 'Тамақты қасықпен жеу керек.', tr: 'Еду нужно есть ложкой.', img: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Ключом', kz: 'Кілтпен', ex: 'Есікті кілтпен аштық.', tr: 'Мы открыли дверь ключом.', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'На метро', kz: 'Метромен', ex: 'Метромен жүру өте ыңғайлы.', tr: 'Ездить на метро очень удобно.', img: 'https://images.unsplash.com/photo-1515098501761-0f7238dc8e49?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С урока', kz: 'Сабақтан', ex: 'Ол сабақтан шықты.', tr: 'Он вышел с урока.', img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из Алматы', kz: 'Алматыдан', ex: 'Мен Алматыдан келдім.', tr: 'Я приехал из Алматы.', img: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из кожи', kz: 'Теріден', ex: 'Бұл сөмке теріден жасалған.', tr: 'Эта сумка сделана из кожи.', img: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С сахаром', kz: 'Қантпен', ex: 'Шайды қантпен ішесің бе?', tr: 'Ты пьешь чай с сахаром?', img: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из магазина', kz: 'Дүкеннен', ex: 'Ол дүкеннен шықты.', tr: 'Он вышел из магазина.', img: 'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из дерева', kz: 'Ағаштан', ex: 'Үй ағаштан жасалған.', tr: 'Дом сделан из дерева.', img: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'В бинокль', kz: 'Дүрбімен', ex: 'Мен дүрбімен қарадым.', tr: 'Я посмотрел в бинокль.', img: 'https://images.unsplash.com/photo-1504917595217-d4ce5eb922fc?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Носом', kz: 'Мұрынмен', ex: 'Мұрынмен дем алу керек.', tr: 'Нужно дышать носом.', img: 'https://images.unsplash.com/photo-1585802196025-a1c22ffb7fc5?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С неба', kz: 'Аспаннан', ex: 'Аспаннан жарық түсті.', tr: 'С неба упал свет.', img: 'https://images.unsplash.com/photo-1513002749550-c59d8404c141?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С лимоном', kz: 'Лимонмен', ex: 'Мен өзіме лимонмен шай алдым.', tr: 'Я взял себе чай с лимоном.', img: 'https://images.unsplash.com/photo-1568569350062-836261518731?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'С молоком', kz: 'Сүтпен', ex: 'Маған сүтпен кофе алшы.', tr: 'Возьми мне кофе с молоком.', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из мяса', kz: 'Еттен', ex: 'Еттен бірдеңе бар ма?', tr: 'Есть что-нибудь из мяса?', img: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=400&q=80' },
-        { ru: 'Из курицы', kz: 'Тауықтан', ex: 'Бұл тауықтан жасалған салат.', tr: 'Это салат, сделанный из курицы.', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=400&q=80' }
-    ];
-
-    const ex1Data = [
-        { pre: '1. Мен жұмысқа автобус', ans: 'пен', post: ' барамын.', rule: "Слово оканчивается на глухую 'с', нужен творительный падеж -пен." },
-        { pre: '2. Шайды қант', ans: 'пен', post: ' ішесің бе?', rule: "Слово оканчивается на глухую 'т', нужен творительный падеж -пен." },
-        { pre: '3. Мен жұмыс', ans: 'тан', post: ' кеш келдім.', rule: "Слово оканчивается на глухую 'с', нужен исходный падеж -тан." },
-        { pre: '4. Ол Алматыға пойыз', ans: 'бен', post: ' келді.', rule: "Слово оканчивается на звонкую 'з', нужен творительный падеж -бен." },
-        { pre: '5. Хатты қалам', ans: 'мен', post: ' жазды.', rule: "Слово оканчивается на сонорную 'м', нужен творительный падеж -мен." },
-        { pre: '6. Бұл сыйлық анам', ans: 'нан', post: '.', rule: "Слово оканчивается на сонорную 'м', нужен исходный падеж -нан." },
-        { pre: '7. Мен такси', ans: 'мен', post: ' келе жатырмын.', rule: "Слово оканчивается на гласную 'и', нужен творительный падеж -мен." },
-        { pre: '8. Біз ұшақ', ans: 'пен', post: ' Астанаға ұштық.', rule: "Слово оканчивается на глухую 'қ', нужен творительный падеж -пен." },
-        { pre: '9. Тамақты қасық', ans: 'пен', post: ' жеу керек.', rule: "Слово оканчивается на глухую 'қ', нужен творительный падеж -пен." },
-        { pre: '10. Есікті кілт', ans: 'пен', post: ' аштық.', rule: "Слово оканчивается на глухую 'т', нужен творительный падеж -пен." },
-        { pre: '11. Метро', ans: 'мен', post: ' жүру өте ыңғайлы.', rule: "Слово оканчивается на гласную 'о', нужен творительный падеж -мен." },
-        { pre: '12. Ол сабақ', ans: 'тан', post: ' шықты.', rule: "Слово оканчивается на глухую 'қ', нужен исходный падеж -тан." },
-        { pre: '13. Сен кім', ans: 'нен', post: ' естідің?', rule: "Слово оканчивается на сонорную 'м', нужен исходный падеж -нен." },
-        { pre: '14. Мен Алматы', ans: 'дан', post: ' келдім.', rule: "Слово оканчивается на гласную 'ы', нужен исходный падеж -дан." },
-        { pre: '15. Бұл сөмке тері', ans: 'ден', post: ' жасалған.', rule: "Слово оканчивается на гласную 'і', нужен исходный падеж -ден." }
-    ];
-
-    const ex3Data = [
-        { pre: '1. Алматы', ans: 'дан', post: ' ұшу.', rule: "Гласная 'ы', исходный пункт -> -дан" },
-        { pre: '2. Пойыз', ans: 'бен', post: ' келу.', rule: "Звонкая 'з', транспорт -> -бен" },
-        { pre: '3. Ағаш', ans: 'тан', post: ' жасау.', rule: "Глухая 'ш', материал -> -тан" },
-        { pre: '4. Қасық', ans: 'пен', post: ' жеу.', rule: "Глухая 'қ', инструмент -> -пен" },
-        { pre: '5. Дүкен', ans: 'нен', post: ' шығу.', rule: "Сонорная 'н', исходный пункт -> -нен" },
-        { pre: '6. Сенім', ans: 'мен', post: ' айту.', rule: "Сонорная 'м', образ действия -> -мен" },
-        { pre: '7. Дүрбі', ans: 'мен', post: ' қарау.', rule: "Гласная 'і', инструмент -> -мен" },
-        { pre: '8. Кеше', ans: 'ден', post: ' бері.', rule: "Гласная 'е', точка во времени -> -ден" },
-        { pre: '9. Қуаныш', ans: 'пен', post: ' хабарлау.', rule: "Глухая 'ш', образ действия -> -пен" },
-        { pre: '10. Қорқыныш', ans: 'тан', post: ' дірілдеу.', rule: "Глухая 'ш', причина -> -тан" },
-        { pre: '11. Мұрын', ans: 'мен', post: ' дем алу.', rule: "Сонорная 'н', инструмент -> -мен" },
-        { pre: '12. Аспан', ans: 'нан', post: ' түсу.', rule: "Сонорная 'н', исходный пункт -> -нан" }
-    ];
-
-    const dialogData = [
-        { role: 'Ayan', kz: 'О, сәлем! Қайдан келе жатырсың?', tr: 'О, привет! Откуда ты идешь?' },
-        { role: 'Ernur', kz: 'Сәлем! Мен жұмыс<input type="text" data-ans="тан" class="dlg-input"> шаршап келе жатырмын.', tr: 'Привет! Я иду с работы уставший.' },
-        { role: 'Ayan', kz: 'Не<input type="text" data-ans="мен" class="dlg-input"> келдің? Көлік<input type="text" data-ans="пен" class="dlg-input"> бе?', tr: 'На чем приехал? На машине?' },
-        { role: 'Ernur', kz: 'Жоқ, бүгін кептеліс. Метро<input type="text" data-ans="мен" class="dlg-input"> тез жеттім.', tr: 'Нет, сегодня пробки. На метро быстро добрался.' },
-        { role: 'Ayan', kz: 'Не ішесің? Мен өзіме лимон<input type="text" data-ans="мен" class="dlg-input"> шай алдым.', tr: 'Что будешь пить? Я себе чай с лимоном взял.' },
-        { role: 'Ernur', kz: 'Маған сүт<input type="text" data-ans="пен" class="dlg-input"> кофе алшы. Қатты қарным ашып тұр, ет<input type="text" data-ans="тен" class="dlg-input"> бірдеңе бар ма?', tr: 'Возьми мне кофе с молоком. Сильно проголодался, из мяса что-нибудь есть?' },
-        { role: 'Ayan', kz: 'Иә, мынау тауық<input type="text" data-ans="тан" class="dlg-input"> жасалған салат. Дәмін татшы! Өте дәмді!', tr: 'Да, вот этот салат сделан из курицы. Попробуй! Очень вкусный!' },
-        { role: 'Ernur', kz: 'О, шынымен дәмді екен!', tr: 'О, и вправду вкусно!' }
-    ];
-
-    const examData = [
-        { ru: 'Я еду на работу на автобусе.', ans: 'мен жұмысқа автобуспен барамын' },
-        { ru: 'Я приехал из магазина.', ans: 'мен дүкеннен келдім' },
-        { ru: 'Мы пьем чай с сахаром.', ans: 'біз шайды қантпен ішеміз' },
-        { ru: 'Этот салат сделан из курицы.', ans: 'бұл салат тауықтан жасалған' }
-    ];
-
-    /* --- ЛОГИКА ПРИЛОЖЕНИЯ --- */
-    let currentStage = 0;
-    let cardIdx = 0;
-    let cardsViewed = new Set();
-
-    document.addEventListener("DOMContentLoaded", () => {
-        try {
-            const savedStage = localStorage.getItem('kazakhA1_stage');
-            if (savedStage !== null) {
-                currentStage = parseInt(savedStage);
-                nextStage(currentStage, true);
-            }
-        } catch (e) { console.warn("LocalStorage недоступен, сессия не сохранена."); }
-        
-        loadCard(cardIdx);
-        renderExercises('exercises-1', ex1Data, 'btn-to-stage-3');
-        renderExercises('exercises-3', ex3Data, 'btn-to-stage-5');
-        renderDialog();
-        renderExam();
-    });
-
-    function nextStage(stageNum, bypassSave = false) {
-        document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-        document.getElementById(`stage-${stageNum}`).classList.add('active');
-        document.getElementById('progress').style.width = `${(stageNum / 8) * 100}%`;
-        currentStage = stageNum;
-        if (!bypassSave) {
-            try { localStorage.setItem('kazakhA1_stage', currentStage); } catch(e) {}
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    /* Флеш-карточки */
-    function loadCard(index) {
-        const card = cardsData[index];
-        const imgEl = document.getElementById('card-img');
-        const loader = document.getElementById('card-loader');
-        const fcElement = document.getElementById('flashcard-element');
-        
-        fcElement.classList.remove('flipped');
-        
-        loader.style.display = 'flex';
-        loader.innerHTML = 'Загрузка фото...';
-        imgEl.style.display = 'none';
-        
-        const tempImg = new Image();
-        tempImg.onload = () => {
-            imgEl.src = card.img;
-            imgEl.style.display = 'block';
-            loader.style.display = 'none';
-        };
-        tempImg.onerror = () => {
-            loader.innerHTML = `Ошибка загрузки фото.<br><button onclick="loadCard(${index})">Повторить</button>`;
-        };
-        tempImg.src = card.img;
-
-        document.getElementById('card-ru').innerText = card.ru;
-        document.getElementById('card-kz').innerText = card.kz;
-        document.getElementById('card-ex').innerText = "Мысал: " + card.ex;
-        document.getElementById('card-tr').innerText = "Перевод: " + card.tr;
-        document.getElementById('card-current').innerText = index + 1;
-        
-        cardsViewed.add(index);
-        if (cardsViewed.size === cardsData.length) {
-            document.getElementById('btn-to-stage-2').style.display = 'inline-block';
-        }
-    }
-
-    function flipCard() { document.getElementById('flashcard-element').classList.toggle('flipped'); }
-    
-    function changeCard(dir) {
-        cardIdx += dir;
-        if (cardIdx < 0) cardIdx = cardsData.length - 1;
-        if (cardIdx >= cardsData.length) cardIdx = 0;
-        loadCard(cardIdx);
-    }
-
-    /* Упражнения (Этапы 2 и 4) */
-    function renderExercises(containerId, data, btnId) {
-        const container = document.getElementById(containerId);
-        data.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = 'exercise-item';
-            div.innerHTML = `
-                ${item.pre}
-                <input type="text" id="${containerId}-in-${index}" autocomplete="off">
-                ${item.post}
-                <button onclick="checkExercise('${containerId}', ${index}, '${item.ans}', '${item.rule.replace(/'/g, "\\'")}', '${btnId}')" style="padding: 5px 10px; font-size: 0.9rem; margin-left:10px;">Проверить</button>
-                <div id="${containerId}-fb-${index}" class="feedback"></div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function checkExercise(containerId, index, correct, rule, btnId) {
-        const input = document.getElementById(`${containerId}-in-${index}`);
-        const fb = document.getElementById(`${containerId}-fb-${index}`);
-        const val = input.value.trim().toLowerCase();
-        
-        if (val === correct) {
-            fb.textContent = "Правильно!";
-            fb.className = "feedback success";
-            input.style.borderColor = "var(--success)";
-            input.disabled = true;
-        } else {
-            fb.textContent = `Ошибка. ${rule}`;
-            fb.className = "feedback error";
-            input.style.borderColor = "var(--error)";
-            input.value = "";
-        }
-        
-        // Проверка завершения всех в блоке
-        const allInputs = document.querySelectorAll(`[id^="${containerId}-in-"]`);
-        const allCorrect = Array.from(allInputs).every(inp => inp.disabled);
-        if (allCorrect) document.getElementById(btnId).disabled = false;
-    }
-
-    /* Диалог (Этап 5) */
-    function renderDialog() {
-        const container = document.getElementById('dialog-container');
-        dialogData.forEach((line, i) => {
-            const div = document.createElement('div');
-            div.className = 'dialog-line';
-            div.setAttribute('data-role', line.role);
-            div.innerHTML = `
-                <div class="dialog-avatar">${line.role === 'Ayan' ? 'Аян:' : 'Ернұр:'}</div>
-                <div class="dialog-text" onclick="this.classList.toggle('revealed')">
-                    ${line.kz}
-                    <div class="dialog-translation">${line.tr}</div>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function toggleRole(role) {
-        document.querySelectorAll('.dialog-line').forEach(line => {
-            line.classList.remove('role-hidden');
-            if (role !== 'None' && line.getAttribute('data-role') === role) {
-                line.classList.add('role-hidden');
-                line.querySelector('.dialog-text').classList.remove('revealed');
-            }
-        });
-    }
-
-    function checkDialog() {
-        const inputs = document.querySelectorAll('.dlg-input');
-        let allCorrect = true;
-        inputs.forEach(inp => {
-            if (inp.value.trim().toLowerCase() === inp.getAttribute('data-ans')) {
-                inp.style.borderColor = "var(--success)";
-                inp.disabled = true;
-            } else {
-                inp.style.borderColor = "var(--error)";
-                inp.value = "";
-                allCorrect = false;
-            }
-        });
-        if (allCorrect) {
-            document.getElementById('btn-to-stage-6').style.display = 'inline-block';
-            alert('Отлично! Диалог заполнен верно.');
-        } else {
-            alert('Есть ошибки. Попробуйте еще раз. Обратите внимание на конечные звуки слов.');
-        }
-    }
-
-    /* Экзамен (Этап 7) */
-    function renderExam() {
-        const container = document.getElementById('exam-container');
-        container.innerHTML = '';
-        examData.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = 'exercise-item';
-            div.style.marginBottom = '20px';
-            div.innerHTML = `
-                <div><strong>${index+1}.</strong> ${item.ru}</div>
-                <input type="text" id="exam-in-${index}" style="width:100%; text-align:left; margin: 10px 0;" placeholder="Введите перевод на казахский...">
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function checkExam() {
-        let correctCount = 0;
-        examData.forEach((item, index) => {
-            const input = document.getElementById(`exam-in-${index}`);
-            // Базовая нормализация: убираем знаки препинания, лишние пробелы, приводим к нижнему регистру
-            const val = input.value.trim().toLowerCase().replace(/[.,!?;]/g, '').replace(/\s+/g, ' ');
-            if (val === item.ans) {
-                correctCount++;
-                input.style.borderColor = "var(--success)";
-            } else {
-                input.style.borderColor = "var(--error)";
-            }
-        });
-        
-        const fb = document.getElementById('exam-result');
-        if (correctCount >= 3) {
-            fb.textContent = `Поздравляем! Вы набрали ${correctCount} из 4. Экзамен сдан!`;
-            fb.className = 'feedback success';
-            document.getElementById('btn-finish').style.display = 'inline-block';
-            document.getElementById('btn-retake').style.display = 'none';
-        } else {
-            fb.textContent = `Результат: ${correctCount} из 4. Для сдачи нужно минимум 3. Проверьте падежи и порядок слов (глагол в конце).`;
-            fb.className = 'feedback error';
-            document.getElementById('btn-retake').style.display = 'inline-block';
-            document.getElementById('btn-finish').style.display = 'none';
-        }
-    }
-
-    function resetExam() {
-        document.getElementById('exam-result').className = 'feedback';
-        document.getElementById('exam-result').textContent = '';
-        renderExam();
-    }
-
-    function restartCourse() {
-        try { localStorage.removeItem('kazakhA1_stage'); } catch(e) {}
-        location.reload();
-    }
-
-    /* --- ГЕНЕРАТОР МАКЕТА ПЕЧАТИ A4 ДВУСТОРОННЕЙ --- */
-    function preparePrint() {
-        const printArea = document.getElementById('print-area');
-        printArea.innerHTML = '';
-        
-        // Проверка загрузки всех изображений перед печатью
-        let loadedImgs = 0;
-        let errors = false;
-        
-        const tempImages = cardsData.map(card => {
-            const img = new Image();
-            img.src = card.img;
-            return img;
-        });
-
-        // Создаем DOM для печати заранее
-        // 8 карточек на страницу. 24 карточки = 3 страницы лиц, 3 страницы оборотов.
-        // Для двусторонней печати по длинному краю:
-        // Сторона лица (Слева-Направо): 1 2, 3 4, 5 6, 7 8
-        // Оборот должен зеркалироваться по горизонтали: 2 1, 4 3, 6 5, 8 7
-        
-        let html = '';
-        const cardsPerPage = 8;
-        const totalPages = Math.ceil(cardsData.length / cardsPerPage);
-
-        for (let p = 0; p < totalPages; p++) {
-            const startIdx = p * cardsPerPage;
-            const endIdx = Math.min(startIdx + cardsPerPage, cardsData.length);
-            const pageCards = cardsData.slice(startIdx, endIdx);
-
-            // Страница Лицо
-            html += `<div class="print-page">`;
-            for (let i = 0; i < 8; i++) {
-                if (i < pageCards.length) {
-                    html += `<div class="print-card" style="padding:0; border:1px solid #ccc;"><img src="${pageCards[i].img}"></div>`;
-                } else {
-                    html += `<div class="print-card" style="border:none;"></div>`;
-                }
-            }
-            html += `</div>`;
-
-            // Страница Оборот (Зеркально по горизонтали для длинного края)
-            html += `<div class="print-page">`;
-            for (let row = 0; row < 4; row++) {
-                for (let col = 1; col >= 0; col--) { // Reverse column (1 then 0)
-                    const i = row * 2 + col;
-                    if (i < pageCards.length) {
-                        html += `
-                        <div class="print-card">
-                            <h3>${pageCards[i].ru}</h3>
-                            <p style="font-weight:bold;">Қазақша: ${pageCards[i].kz}</p>
-                            <p><i>Мысал: ${pageCards[i].ex}</i></p>
-                            <p style="font-size:12px; color:#555;">${pageCards[i].tr}</p>
-                            <div style="position:absolute; bottom:5px; right:5px; font-size:10px;">${startIdx + i + 1}</div>
-                        </div>`;
-                    } else {
-                        html += `<div class="print-card" style="border:none;"></div>`;
-                    }
-                }
-            }
-            html += `</div>`;
-        }
-        
-        printArea.innerHTML = html;
-
-        // Если изображения в кэше браузера, печать пройдет гладко
-        // Вызываем окно печати. Скрывается основной интерфейс через @media print
-        setTimeout(() => {
-            alert("Совет: При печати выберите бумагу A4, масштаб 'По умолчанию', и включите 'Двусторонняя печать (Переплет по длинному краю)'.\nТакже в настройках браузера включите 'Сохранить как PDF', если вам нужен PDF файл.");
-            window.print();
-        }, 500);
-    }
-</script>
-</body>
-</html>
+    /* --- ДАННЫЕ УРОКА --- */
+    const wordQuizData = [
+        { word: 'қорқу', correct: 'бояться', options: ['бояться', 'дышать', 'дрожать', 'покупать'] },
+        { word: 'дем алу', correct: 'дышать', options: ['пить', 'дышать', 'ходить', 'слушать'] },
+        { word: 'кептеліс', correct: 'пробка', options: ['дорога', 'пробка', 'автобус', 'поезд'] },
