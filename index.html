@@ -278,3 +278,370 @@
         { word: 'дірілдеу', correct: 'дрожать', options: ['смеяться', 'плакать', 'дрожать', 'падать'] },
         { word: 'жасалу / жасау', correct: 'быть сделанным / делать', options: ['быть сделанным / делать', 'ломать', 'покупать', 'продавать'] }
     ];
+
+    const cardsData = [
+        { ru: 'На велосипеде', kz: 'Велосипедпен', ex: 'Мен жұмысқа велосипедпен барамын.', tr: 'Я еду на работу на велосипеде.', img: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'На автобусе', kz: 'Автобуспен', ex: 'Мен жұмысқа автобуспен барамын.', tr: 'Я еду на работу на автобусе.', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С работы', kz: 'Жұмыстан', ex: 'Мен жұмыстан кеш келдім.', tr: 'Я пришел с работы поздно.', img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'На поезде', kz: 'Пойызбен', ex: 'Ол Алматыға пойызбен келді.', tr: 'Он приехал в Алматы на поезде.', img: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Ручкой', kz: 'Қаламмен', ex: 'Хатты қаламмен жазды.', tr: 'Письмо написал ручкой.', img: 'https://images.unsplash.com/photo-1583485088034-697b5a62483c?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'От мамы', kz: 'Анамнан', ex: 'Бұл сыйлық анамнан.', tr: 'Этот подарок от мамы.', img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'На такси', kz: 'Таксимен', ex: 'Мен таксимен келе жатырмын.', tr: 'Я еду на такси.', img: 'https://images.unsplash.com/photo-1502870659501-85956e14edba?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'На самолете', kz: 'Ұшақпен', ex: 'Біз ұшақпен Астанаға ұштық.', tr: 'Мы полетели в Астану на самолете.', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Ложкой', kz: 'Қасықпен', ex: 'Тамақты қасықпен жеу керек.', tr: 'Еду нужно есть ложкой.', img: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Ключом', kz: 'Кілтпен', ex: 'Есікті кілтпен аштық.', tr: 'Мы открыли дверь ключом.', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'На метро', kz: 'Метромен', ex: 'Метромен жүру өте ыңғайлы.', tr: 'Ездить на метро очень удобно.', img: 'https://images.unsplash.com/photo-1515098501761-0f7238dc8e49?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С урока', kz: 'Сабақтан', ex: 'Ол сабақтан шықты.', tr: 'Он вышел с урока.', img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из Алматы', kz: 'Алматыдан', ex: 'Мен Алматыдан келдім.', tr: 'Я приехал из Алматы.', img: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из кожи', kz: 'Теріден', ex: 'Бұл сөмке теріден жасалған.', tr: 'Эта сумка сделана из кожи.', img: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С сахаром', kz: 'Қантпен', ex: 'Шайды қантпен ішесің бе?', tr: 'Ты пьешь чай с сахаром?', img: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из магазина', kz: 'Дүкеннен', ex: 'Ол дүкеннен шықты.', tr: 'Он вышел из магазина.', img: 'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из дерева', kz: 'Ағаштан', ex: 'Үй ағаштан жасалған.', tr: 'Дом сделан из дерева.', img: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'В бинокль', kz: 'Дүрбімен', ex: 'Мен дүрбімен қарадым.', tr: 'Я посмотрел в бинокль.', img: 'https://images.unsplash.com/photo-1504917595217-d4ce5eb922fc?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Носом', kz: 'Мұрынмен', ex: 'Мұрынмен дем алу керек.', tr: 'Нужно дышать носом.', img: 'https://images.unsplash.com/photo-1585802196025-a1c22ffb7fc5?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С неба', kz: 'Аспаннан', ex: 'Аспаннан жарық түсті.', tr: 'С неба упал свет.', img: 'https://images.unsplash.com/photo-1513002749550-c59d8404c141?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С лимоном', kz: 'Лимонмен', ex: 'Мен өзіме лимонмен шай алдым.', tr: 'Я взял себе чай с лимоном.', img: 'https://images.unsplash.com/photo-1568569350062-836261518731?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'С молоком', kz: 'Сүтпен', ex: 'Маған сүтпен кофе алшы.', tr: 'Возьми мне кофе с молоком.', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из мяса', kz: 'Еттен', ex: 'Еттен бірдеңе бар ма?', tr: 'Есть что-нибудь из мяса?', img: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=400&q=80' },
+        { ru: 'Из курицы', kz: 'Тауықтан', ex: 'Бұл тауықтан жасалған салат.', tr: 'Это салат, сделанный из курицы.', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=400&q=80' }
+    ];
+
+    const ex1Data = [
+        { pre: '1. Мен жұмысқа автобус', ans: 'пен', post: ' барамын.', rule: "Глухая 'с' -> -пен." },
+        { pre: '2. Шайды қант', ans: 'пен', post: ' ішесің бе?', rule: "Глухая 'т' -> -пен." },
+        { pre: '3. Мен жұмыс', ans: 'тан', post: ' кеш келдім.', rule: "Глухая 'с' -> -тан." },
+        { pre: '4. Ол Алматыға пойыз', ans: 'бен', post: ' келді.', rule: "Звонкая 'з' -> -бен." },
+        { pre: '5. Хатты қалам', ans: 'мен', post: ' жазды.', rule: "Сонорная 'м' -> -мен." },
+        { pre: '6. Бұл сыйлық анам', ans: 'нан', post: '.', rule: "Сонорная 'м' -> -нан." },
+        { pre: '7. Мен такси', ans: 'мен', post: ' келе жатырмын.', rule: "Гласная 'и' -> -мен." },
+        { pre: '8. Біз ұшақ', ans: 'пен', post: ' Астанаға ұштық.', rule: "Глухая 'қ' -> -пен." },
+        { pre: '9. Тамақты қасық', ans: 'пен', post: ' жеу керек.', rule: "Глухая 'қ' -> -пен." },
+        { pre: '10. Есікті кілт', ans: 'пен', post: ' аштық.', rule: "Глухая 'т' -> -пен." },
+        { pre: '11. Метро', ans: 'мен', post: ' жүру өте ыңғайлы.', rule: "Гласная 'о' -> -мен." },
+        { pre: '12. Ол сабақ', ans: 'тан', post: ' шықты.', rule: "Глухая 'қ' -> -тан." },
+        { pre: '13. Сен кім', ans: 'нен', post: ' естідің?', rule: "Сонорная 'м' -> -нен." },
+        { pre: '14. Мен Алматы', ans: 'дан', post: ' келдім.', rule: "Гласная 'ы' -> -дан." },
+        { pre: '15. Бұл сөмке тері', ans: 'ден', post: ' жасалған.', rule: "Гласная 'і' -> -ден." }
+    ];
+
+    const ex3Data = [
+        { pre: '1. Алматы', ans: 'дан', post: ' ұшу.', rule: "Гласная 'ы' -> -дан" },
+        { pre: '2. Пойыз', ans: 'бен', post: ' келу.', rule: "Звонкая 'з' -> -бен" },
+        { pre: '3. Ағаш', ans: 'тан', post: ' жасау.', rule: "Глухая 'ш' -> -тан" },
+        { pre: '4. Қасық', ans: 'пен', post: ' жеу.', rule: "Глухая 'қ' -> -пен" },
+        { pre: '5. Дүкен', ans: 'нен', post: ' шығу.', rule: "Сонорная 'н' -> -нен" },
+        { pre: '6. Сенім', ans: 'мен', post: ' айту.', rule: "Сонорная 'м' -> -мен" },
+        { pre: '7. Дүрбі', ans: 'мен', post: ' қарау.', rule: "Гласная 'і' -> -мен" },
+        { pre: '8. Кеше', ans: 'ден', post: ' бері.', rule: "Гласная 'е' -> -ден" },
+        { pre: '9. Қуаныш', ans: 'пен', post: ' хабарлау.', rule: "Глухая 'ш' -> -пен" },
+        { pre: '10. Қорқыныш', ans: 'тан', post: ' дірілдеу.', rule: "Глухая 'ш' -> -тан" },
+        { pre: '11. Мұрын', ans: 'мен', post: ' дем алу.', rule: "Сонорная 'н' -> -мен" },
+        { pre: '12. Аспан', ans: 'нан', post: ' түсу.', rule: "Сонорная 'н' -> -нан" }
+    ];
+
+    const dialogData = [
+        { role: 'Ayan', kz: 'О, сәлем! Қайдан келе жатырсың?', tr: 'О, привет! Откуда ты идешь?' },
+        { role: 'Ernur', kz: 'Сәлем! Мен жұмыс<input type="text" data-ans="тан" class="dlg-input"> шаршап келе жатырмын.', tr: 'Привет! Я иду с работы уставший.' },
+        { role: 'Ayan', kz: 'Не<input type="text" data-ans="мен" class="dlg-input"> келдің? Көлік<input type="text" data-ans="пен" class="dlg-input"> бе?', tr: 'На чем приехал? На машине?' },
+        { role: 'Ernur', kz: 'Жоқ, бүгін кептеліс. Метро<input type="text" data-ans="мен" class="dlg-input"> тез жеттім.', tr: 'Нет, сегодня пробки. На метро быстро добрался.' },
+        { role: 'Ayan', kz: 'Не ішесің? Мен өзіме лимон<input type="text" data-ans="мен" class="dlg-input"> шай алдым.', tr: 'Что будешь пить? Я себе чай с лимоном взял.' },
+        { role: 'Ernur', kz: 'Маған сүт<input type="text" data-ans="пен" class="dlg-input"> кофе алшы. Қатты қарным ашып тұр, ет<input type="text" data-ans="тен" class="dlg-input"> бірдеңе бар ма?', tr: 'Возьми мне кофе с молоком. Сильно проголодался, из мяса что-нибудь есть?' },
+        { role: 'Ayan', kz: 'Иә, мынау тауық<input type="text" data-ans="тан" class="dlg-input"> жасалған салат. Дәмін татшы! Өте дәмді!', tr: 'Да, вот этот салат сделан из курицы. Попробуй! Очень вкусный!' },
+        { role: 'Ernur', kz: 'О, шынымен дәмді екен!', tr: 'О, и вправду вкусно!' }
+    ];
+
+    const examData = [
+        { ru: 'Я еду на работу на автобусе.', ans: 'мен жұмысқа автобуспен барамын' },
+        { ru: 'Я приехал из магазина.', ans: 'мен дүкеннен келдім' },
+        { ru: 'Мы пьем чай с сахаром.', ans: 'біз шайды қантпен ішеміз' },
+        { ru: 'Этот салат сделан из курицы.', ans: 'бұл салат тауықтан жасалған' }
+    ];
+
+    /* --- ЛОГИКА --- */
+    let currentStage = 0;
+    let currentWordIdx = 0;
+    let wordScore = 0;
+    let cardIdx = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        renderWordQuiz();
+        loadCard(cardIdx);
+        renderExercises('exercises-1', ex1Data, 'btn-to-stage-4');
+        renderExercises('exercises-3', ex3Data, 'btn-to-stage-6');
+        renderDialog();
+        renderExam();
+    });
+
+    function nextStage(stageNum) {
+        document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+        document.getElementById(`stage-${stageNum}`).classList.add('active');
+        document.getElementById('progress').style.width = `${(stageNum / 9) * 100}%`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 1-КЕЗЕҢ: ЖАҢА СӨЗДЕР */
+    function renderWordQuiz() {
+        const item = wordQuizData[currentWordIdx];
+        document.getElementById('quiz-word').innerText = item.word;
+        document.getElementById('word-progress-count').innerText = wordScore;
+        const optBox = document.getElementById('quiz-options');
+        const fb = document.getElementById('quiz-feedback');
+        optBox.innerHTML = '';
+        fb.innerText = '';
+
+        item.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.style.cssText = "padding:12px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:1rem; font-weight:bold;";
+            btn.onclick = () => {
+                if(opt === item.correct) {
+                    fb.style.color = 'var(--success)';
+                    fb.innerText = '✓ Дұрыс! Өте жақсы!';
+                    wordScore++;
+                    document.getElementById('word-progress-count').innerText = wordScore;
+                    setTimeout(() => {
+                        currentWordIdx++;
+                        if (currentWordIdx < wordQuizData.length) {
+                            renderWordQuiz();
+                        } else {
+                            fb.innerText = '🎉 Барлық сөздерді өттіңіз!';
+                            document.getElementById('btn-to-stage-2').disabled = false;
+                        }
+                    }, 800);
+                } else {
+                    fb.style.color = 'var(--error)';
+                    fb.innerText = '✗ Қате. Қайтадан байқап көр!';
+                }
+            };
+            optBox.appendChild(btn);
+        });
+    }
+
+    /* 2-КЕЗЕҢ: Флеш-карточкалар */
+    function loadCard(index) {
+        const card = cardsData[index];
+        const imgEl = document.getElementById('card-img');
+        const loader = document.getElementById('card-loader');
+        const fcElement = document.getElementById('flashcard-element');
+        
+        fcElement.classList.remove('flipped');
+        loader.style.display = 'flex';
+        imgEl.style.display = 'none';
+        
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            imgEl.src = card.img;
+            imgEl.style.display = 'block';
+            loader.style.display = 'none';
+        };
+        tempImg.onerror = () => {
+            loader.innerHTML = `Ошибка загрузки.<br><button onclick="loadCard(${index})">Повторить</button>`;
+        };
+        tempImg.src = card.img;
+
+        document.getElementById('card-ru').innerText = card.ru;
+        document.getElementById('card-kz').innerText = card.kz;
+        document.getElementById('card-ex').innerText = "Мысал: " + card.ex;
+        document.getElementById('card-tr').innerText = "Перевод: " + card.tr;
+        document.getElementById('card-current').innerText = index + 1;
+    }
+
+    function flipCard() { document.getElementById('flashcard-element').classList.toggle('flipped'); }
+    
+    function changeCard(dir) {
+        cardIdx += dir;
+        if (cardIdx < 0) cardIdx = cardsData.length - 1;
+        if (cardIdx >= cardsData.length) cardIdx = 0;
+        loadCard(cardIdx);
+    }
+
+    /* Упражнения */
+    function renderExercises(containerId, data, btnId) {
+        const container = document.getElementById(containerId);
+        data.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                ${item.pre}
+                <input type="text" id="${containerId}-in-${index}" autocomplete="off">
+                ${item.post}
+                <button onclick="checkExercise('${containerId}', ${index}, '${item.ans}', '${item.rule.replace(/'/g, "\\'")}', '${btnId}')" style="padding: 5px 10px; font-size: 0.9rem; margin-left:10px;">Тексеру</button>
+                <div id="${containerId}-fb-${index}" class="feedback"></div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function checkExercise(containerId, index, correct, rule, btnId) {
+        const input = document.getElementById(`${containerId}-in-${index}`);
+        const fb = document.getElementById(`${containerId}-fb-${index}`);
+        const val = input.value.trim().toLowerCase();
+        
+        if (val === correct) {
+            fb.textContent = "Дұрыс!";
+            fb.className = "feedback success";
+            input.style.borderColor = "var(--success)";
+            input.disabled = true;
+        } else {
+            fb.textContent = `Қате. ${rule}`;
+            fb.className = "feedback error";
+            input.style.borderColor = "var(--error)";
+            input.value = "";
+        }
+        
+        const allInputs = document.querySelectorAll(`[id^="${containerId}-in-"]`);
+        const allCorrect = Array.from(allInputs).every(inp => inp.disabled);
+        if (allCorrect) document.getElementById(btnId).disabled = false;
+    }
+
+    /* Диалог */
+    function renderDialog() {
+        const container = document.getElementById('dialog-container');
+        dialogData.forEach((line) => {
+            const div = document.createElement('div');
+            div.className = 'dialog-line';
+            div.setAttribute('data-role', line.role);
+            div.innerHTML = `
+                <div class="dialog-avatar">${line.role === 'Ayan' ? 'Аян:' : 'Ернұр:'}</div>
+                <div class="dialog-text" onclick="this.classList.toggle('revealed')">
+                    ${line.kz}
+                    <div class="dialog-translation">${line.tr}</div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function toggleRole(role) {
+        document.querySelectorAll('.dialog-line').forEach(line => {
+            line.classList.remove('role-hidden');
+            if (role !== 'None' && line.getAttribute('data-role') === role) {
+                line.classList.add('role-hidden');
+                line.querySelector('.dialog-text').classList.remove('revealed');
+            }
+        });
+    }
+
+    function checkDialog() {
+        const inputs = document.querySelectorAll('.dlg-input');
+        let allCorrect = true;
+        inputs.forEach(inp => {
+            if (inp.value.trim().toLowerCase() === inp.getAttribute('data-ans')) {
+                inp.style.borderColor = "var(--success)";
+                inp.disabled = true;
+            } else {
+                inp.style.borderColor = "var(--error)";
+                inp.value = "";
+                allCorrect = false;
+            }
+        });
+        if (allCorrect) {
+            document.getElementById('btn-to-stage-7').style.display = 'inline-block';
+            alert('Өте жақсы! Диалог дұрыс толтырылды.');
+        } else {
+            alert('Қателер бар. Қайтадан байқап өтіңіз.');
+        }
+    }
+
+    /* Экзамен */
+    function renderExam() {
+        const container = document.getElementById('exam-container');
+        container.innerHTML = '';
+        examData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.style.marginBottom = '20px';
+            div.innerHTML = `
+                <div><strong>${index+1}.</strong> ${item.ru}</div>
+                <input type="text" id="exam-in-${index}" style="width:100%; text-align:left; margin: 10px 0;" placeholder="Қазақша аудармасын жазыңыз...">
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function checkExam() {
+        let correctCount = 0;
+        examData.forEach((item, index) => {
+            const input = document.getElementById(`exam-in-${index}`);
+            const val = input.value.trim().toLowerCase().replace(/[.,!?;]/g, '').replace(/\s+/g, ' ');
+            if (val === item.ans) {
+                correctCount++;
+                input.style.borderColor = "var(--success)";
+            } else {
+                input.style.borderColor = "var(--error)";
+            }
+        });
+        
+        const fb = document.getElementById('exam-result');
+        if (correctCount >= 3) {
+            fb.textContent = `Құттықтаймыз! Нәтиже: ${correctCount} / 4. Экзамен тапсырылды!`;
+            fb.className = 'feedback success';
+            document.getElementById('btn-finish').style.display = 'inline-block';
+            document.getElementById('btn-retake').style.display = 'none';
+        } else {
+            fb.textContent = `Нәтиже: ${correctCount} / 4. Кемінде 3 сөйлем дұрыс болуы керек. Сөздердің реті мен жалғауларды тексеріңіз.`;
+            fb.className = 'feedback error';
+            document.getElementById('btn-retake').style.display = 'inline-block';
+            document.getElementById('btn-finish').style.display = 'none';
+        }
+    }
+
+    function resetExam() {
+        document.getElementById('exam-result').className = 'feedback';
+        document.getElementById('exam-result').textContent = '';
+        renderExam();
+    }
+
+    function restartCourse() {
+        location.reload();
+    }
+
+    /* Печать */
+    function preparePrint() {
+        const printArea = document.getElementById('print-area');
+        printArea.innerHTML = '';
+        let html = '';
+        const cardsPerPage = 8;
+        const totalPages = Math.ceil(cardsData.length / cardsPerPage);
+
+        for (let p = 0; p < totalPages; p++) {
+            const startIdx = p * cardsPerPage;
+            const pageCards = cardsData.slice(startIdx, startIdx + cardsPerPage);
+
+            html += `<div class="print-page">`;
+            for (let i = 0; i < 8; i++) {
+                if (i < pageCards.length) {
+                    html += `<div class="print-card" style="padding:0; border:1px solid #ccc;"><img src="${pageCards[i].img}"></div>`;
+                } else {
+                    html += `<div class="print-card" style="border:none;"></div>`;
+                }
+            }
+            html += `</div>`;
+
+            html += `<div class="print-page">`;
+            for (let row = 0; row < 4; row++) {
+                for (let col = 1; col >= 0; col--) {
+                    const i = row * 2 + col;
+                    if (i < pageCards.length) {
+                        html += `
+                        <div class="print-card">
+                            <h3>${pageCards[i].ru}</h3>
+                            <p style="font-weight:bold;">Қазақша: ${pageCards[i].kz}</p>
+                            <p><i>Мысал: ${pageCards[i].ex}</i></p>
+                            <p style="font-size:12px; color:#555;">${pageCards[i].tr}</p>
+                            <div style="position:absolute; bottom:5px; right:5px; font-size:10px;">${startIdx + i + 1}</div>
+                        </div>`;
+                    } else {
+                        html += `<div class="print-card" style="border:none;"></div>`;
+                    }
+                }
+            }
+            html += `</div>`;
+        }
+        
+        printArea.innerHTML = html;
+        setTimeout(() => { window.print(); }, 500);
+    }
+</script>
+</body>
+</html>
